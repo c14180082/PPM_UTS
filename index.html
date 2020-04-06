@@ -6,6 +6,12 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <title>My Website</title>
+
+    <style>
+        .tap{
+            background-color: white;
+        }
+    </style>
     
     
 </head>
@@ -40,23 +46,28 @@
                 </ul>
             </div>
         </div>
-		<h2>Input Pinjaman</h2>
+		<h2 style="text-align: center;">Input Pinjaman</h2>
 		<div data-role="content" data-theme="b">
+            <div class="ui-field-contain">
+                <label for="textinput-fc">Nama Peminjam:</label>
+                <input type="text" name="textinput-fc" id="textinput-fc" placeholder="Text input" value="">
+            </div>
 			<div data-role=fieldcontain>
                 Jumlah Pinjam:
                 <input type="number" id="jumlahPinjam">
-                Lama Pinjam: 
-				<input type="number" id="lamaPinjam">
-				<button onclick="input()">Input</button>
+                Lama Pinjam: (bulan)
+                <input type="range" name="slider-fill" id="slider-fill" value="1" min="1" max="24" step="1" data-highlight="true">
+				<button onclick="input()" id="inputPinjam">Input</button>
             </div>
             <h4 id="totalPengembalian">Total Pengembalian: </h4>
 
-            <a href="#popupUndismissible" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Detail Cicilan</a>
+            <a href="#popupUndismissible" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" id="pop">Detail Cicilan</a>
         </div>
         
         <div data-role="popup" id="popupUndismissible" class="ui-content" style="max-width:280px" data-dismissible="false">
             <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
             <p>Jumlah Pinjaman: <b id="isi_PJ"></b></p>
+            <p>Lama Pinjaman: <b id="isi_LamaPJ"></b></p>
             <p>Besar Bunga: <b id="isi_Bunga"></b></p>
             <p>Total Bunga: <b id="isi_TotalBunga"></b></p>
             <p>Total Yang Harus Dikembalikan: <b id="isi_Total"></b></p>
@@ -73,7 +84,7 @@
                 </ul>
             </div>
         </div>
-		<h2>List Pinjaman</h2>
+		<h2 style="text-align: center;">List Pinjaman</h2>
 		<div data-role="content" data-theme="a">
 			<ul data-role="listview" data-inset="true" >
                 <ol id="listSemua">
@@ -86,7 +97,8 @@
     <script>
         function input(){
             var jumlah_pinjam = parseInt($("#jumlahPinjam").val());
-            var lama_pinjam = parseInt($("#lamaPinjam").val());
+            var lama_pinjam = parseInt($("#slider-fill").val());
+            var nama_peminjam = $("#textinput-fc").val();
             var total_kembali = 0;
             var bunga = 0;
 
@@ -134,15 +146,27 @@
                 rupiah2 += separator2 + ribuan2.join('.');
             }
 
-            var append_ = '<li><h4>Jumlah Pinjam Rp: '+jumlah_pinjam+'</h4><p>Lama Pinjam:'+lama_pinjam+'</p><p>Bunga: '+bunga+'%</p></li>';
+            var append_ = '<li><h4>'+nama_peminjam+'</h4><p>Jumlah Pinjam Rp: '+jumlah_pinjam+'<p><p>Lama Pinjam:'+lama_pinjam+'Bulan</p>Total Bunga: Rp '+rupiah2+'<p></p><p>Besar Bunga: '+bunga+'%</p></li>';
 
             $("#totalPengembalian").text("Total Pengembalian: Rp "+rupiah);
             $("#isi_PJ").text("Rp "+ rupiah1);
+            $("#isi_LamaPJ").text(lama_pinjam+" Bulan");
             $("#isi_Bunga").text(bunga+"%");
             $("#isi_TotalBunga").text("Rp "+ rupiah2);
             $("#isi_Total").text("Rp "+ rupiah);
             $("#listSemua").append(append_);
+            
         }
+    </script>
+
+    <script>
+        $(function(){
+        $( "#pop" ).bind( "tap", tapHandler );
+        
+        function tapHandler( event ){
+            $( event.target ).addClass( "tap" );
+        }
+        });
     </script>
     
 </body>
