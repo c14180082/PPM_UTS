@@ -20,8 +20,8 @@
             <h1>Koperasi</h1>
             <div data-role="navbar" data-iconpos="bottom">
                 <ul>
-                    <li><a href="#inputPinjaman" data-icon="home">Satu</a></li>
-                    <li><a href="#halaman2" data-icon="gear">Dua</a></li>
+                    <li><a href="#inputPinjaman">Input Pinjaman</a></li>
+                    <li><a href="#listPinjaman">List Pinjaman</a></li>
                 </ul>
             </div>
         </div>
@@ -35,8 +35,8 @@
             <h1>Koperasi</h1>
             <div data-role="navbar" data-iconpos="bottom">
                 <ul>
-                    <li><a href="#inputPinjaman" data-icon="home">Satu</a></li>
-                    <li><a href="#halaman2" data-icon="gear">Dua</a></li>
+                    <li><a href="#inputPinjaman">Input Pinjaman</a></li>
+                    <li><a href="#listPinjaman">List Pinjaman</a></li>
                 </ul>
             </div>
         </div>
@@ -50,6 +50,26 @@
 				<button onclick="input()">Input</button>
             </div>
             <h4 id="totalPengembalian">Total Pengembalian: </h4>
+		</div>
+    </div>
+
+    <div data-role="page" id="listPinjaman">
+        <div data-role="header" style="overflow:hidden;">
+            <h1>Koperasi</h1>
+            <div data-role="navbar" data-iconpos="bottom">
+                <ul>
+                    <li><a href="#inputPinjaman">Input Pinjaman</a></li>
+                    <li><a href="#listPinjaman">List Pinjaman</a></li>
+                </ul>
+            </div>
+        </div>
+		<h2>List Pinjaman</h2>
+		<div data-role="content" data-theme="a">
+			<ul data-role="listview" data-inset="true" >
+                <ol id="listSemua">
+
+                </ol>
+            </ul>
 		</div>
 	</div>
 
@@ -82,7 +102,10 @@
                 rupiah += separator + ribuan.join('.');
             }
 
+            var append_ = '<li><h4>Jumlah Pinjam Rp: '+jumlah_pinjam+'</h4><p>Lama Pinjam:'+lama_pinjam+'</p><p>Bunga: '+bunga+'%</p></li>';
+
             $("#totalPengembalian").text("Total Pengembalian: Rp "+rupiah);
+            $("#listSemua").append(append_);
         }
     </script>
     
