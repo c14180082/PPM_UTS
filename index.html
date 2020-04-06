@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>My Website</title>
+    
+    
+</head>
+<body>
+    
+    
+
+
+
+    <div data-role="page" id="index">
+        <div data-role="header" style="overflow:hidden;">
+            <h1>Koperasi</h1>
+            <div data-role="navbar" data-iconpos="bottom">
+                <ul>
+                    <li><a href="#inputPinjaman" data-icon="home">Satu</a></li>
+                    <li><a href="#halaman2" data-icon="gear">Dua</a></li>
+                </ul>
+            </div>
+        </div>
+	</div>
+
+  
+
+    
+	<div data-role="page" id="inputPinjaman">
+        <div data-role="header" style="overflow:hidden;">
+            <h1>Koperasi</h1>
+            <div data-role="navbar" data-iconpos="bottom">
+                <ul>
+                    <li><a href="#inputPinjaman" data-icon="home">Satu</a></li>
+                    <li><a href="#halaman2" data-icon="gear">Dua</a></li>
+                </ul>
+            </div>
+        </div>
+		<h2>Input Pinjaman</h2>
+		<div data-role="content" data-theme="b">
+			<div data-role=fieldcontain>
+                Jumlah Pinjam:
+                <input type="number" id="jumlahPinjam">
+                Lama Pinjam: 
+				<input type="number" id="lamaPinjam">
+				<button onclick="input()">Input</button>
+            </div>
+            <h4 id="totalPengembalian">Total Pengembalian: </h4>
+		</div>
+	</div>
+
+    <script>
+        function input(){
+            var jumlah_pinjam = parseInt($("#jumlahPinjam").val());
+            var lama_pinjam = parseInt($("#lamaPinjam").val());
+            var total_kembali = 0;
+            var bunga = 0;
+
+            if(lama_pinjam < 7 && lama_pinjam > 0){
+                bunga = 2;
+            }
+            if(lama_pinjam < 13 && lama_pinjam > 6){
+                bunga = 1.5;
+            }
+            if(lama_pinjam > 12){
+                bunga = 1;
+            }
+
+            total_kembali = jumlah_pinjam + (jumlah_pinjam * (bunga / 100)*lama_pinjam);
+
+            var	number_string =  total_kembali.toString(),
+                sisa 	= number_string.length % 3,
+                rupiah 	= number_string.substr(0, sisa),
+                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                    
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            $("#totalPengembalian").text("Total Pengembalian: Rp "+rupiah);
+        }
+    </script>
+    
+</body>
+</html>
