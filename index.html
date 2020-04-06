@@ -50,7 +50,17 @@
 				<button onclick="input()">Input</button>
             </div>
             <h4 id="totalPengembalian">Total Pengembalian: </h4>
-		</div>
+
+            <a href="#popupUndismissible" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Detail Cicilan</a>
+        </div>
+        
+        <div data-role="popup" id="popupUndismissible" class="ui-content" style="max-width:280px" data-dismissible="false">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+            <p>Jumlah Pinjaman: <b id="isi_PJ"></b></p>
+            <p>Besar Bunga: <b id="isi_Bunga"></b></p>
+            <p>Total Bunga: <b id="isi_TotalBunga"></b></p>
+            <p>Total Yang Harus Dikembalikan: <b id="isi_Total"></b></p>
+        </div>
     </div>
 
     <div data-role="page" id="listPinjaman">
@@ -92,6 +102,8 @@
 
             total_kembali = jumlah_pinjam + (jumlah_pinjam * (bunga / 100)*lama_pinjam);
 
+            var selisih_total = total_kembali - jumlah_pinjam;
+
             var	number_string =  total_kembali.toString(),
                 sisa 	= number_string.length % 3,
                 rupiah 	= number_string.substr(0, sisa),
@@ -102,9 +114,33 @@
                 rupiah += separator + ribuan.join('.');
             }
 
+            var	number_string1 =  jumlah_pinjam.toString(),
+                sisa1 	= number_string1.length % 3,
+                rupiah1 	= number_string1.substr(0, sisa1),
+                ribuan1 	= number_string1.substr(sisa1).match(/\d{3}/g);
+                    
+            if (ribuan1) {
+                separator1 = sisa1 ? '.' : '';
+                rupiah1 += separator1 + ribuan1.join('.');
+            }
+
+            var	number_string2 =  selisih_total.toString(),
+                sisa2 	= number_string2.length % 3,
+                rupiah2 	= number_string2.substr(0, sisa2),
+                ribuan2 	= number_string2.substr(sisa2).match(/\d{3}/g);
+                    
+            if (ribuan2) {
+                separator2 = sisa2 ? '.' : '';
+                rupiah2 += separator2 + ribuan2.join('.');
+            }
+
             var append_ = '<li><h4>Jumlah Pinjam Rp: '+jumlah_pinjam+'</h4><p>Lama Pinjam:'+lama_pinjam+'</p><p>Bunga: '+bunga+'%</p></li>';
 
             $("#totalPengembalian").text("Total Pengembalian: Rp "+rupiah);
+            $("#isi_PJ").text("Rp "+ rupiah1);
+            $("#isi_Bunga").text(bunga+"%");
+            $("#isi_TotalBunga").text("Rp "+ rupiah2);
+            $("#isi_Total").text("Rp "+ rupiah);
             $("#listSemua").append(append_);
         }
     </script>
